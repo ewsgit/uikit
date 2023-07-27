@@ -1,5 +1,6 @@
 import UIComponent from "../../../UIComponent.ts";
 import styles from "./Box.module.scss"
+import unit from "../../../helpers/unit.ts";
 
 export default class Box extends UIComponent {
   props: {
@@ -54,18 +55,20 @@ export default class Box extends UIComponent {
 
     switch (this.props.align?.horizontally) {
       case "left":
-        this.renderedElement.classList.add(styles.alignLeft)
+        this.renderedElement.classList.add(styles.justifyLeft)
         break
       case "center":
-        this.renderedElement.classList.add(styles.alignCenter)
+        this.renderedElement.classList.add(styles.justifyCenter)
         break
       case "right":
-        this.renderedElement.classList.add(styles.alignRight)
+        this.renderedElement.classList.add(styles.justifyRight)
         break
       default:
-        this.renderedElement.classList.add(styles.alignLeft)
+        this.renderedElement.classList.add(styles.justifyLeft)
         break
     }
+
+    this.renderedElement.style.setProperty("--gap", unit(this.props.gap || 0))
 
     this.renderedElement.classList.add(styles.component)
   }

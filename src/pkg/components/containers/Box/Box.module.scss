@@ -1,8 +1,8 @@
 .component {
   display: flex;
   background: var(--container-background);
-  border-radius: 3px;
   border: 1px solid var(--container-border);
+  gap: var(--gap);
 }
 
 .row {

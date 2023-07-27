@@ -1,5 +1,6 @@
 .component {
   display: flex;
+  gap: var(--gap);
 }
 
 .row {

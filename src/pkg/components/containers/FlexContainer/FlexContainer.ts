@@ -1,5 +1,6 @@
 import UIComponent from "../../../UIComponent.ts";
 import styles from "./FlexContainer.module.scss"
+import unit from "../../../helpers/unit.ts";
 
 export default class FlexContainer extends UIComponent {
   props: {
@@ -66,6 +67,8 @@ export default class FlexContainer extends UIComponent {
         this.renderedElement.classList.add(styles.justifyLeft)
         break
     }
+
+    this.renderedElement.style.setProperty("--gap", unit(this.props.gap || 0))
 
     this.renderedElement.classList.add(styles.component)
   }

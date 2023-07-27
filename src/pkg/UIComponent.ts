@@ -59,6 +59,10 @@ export default class UIComponent extends UILeafComponent {
 
     if (child.renderedElement) {
       this.renderedElement?.appendChild(child.renderedElement)
+    } else {
+      child.render()
+      // @ts-ignore
+      this.renderedElement?.appendChild(child.renderedElement)
     }
   }
 
