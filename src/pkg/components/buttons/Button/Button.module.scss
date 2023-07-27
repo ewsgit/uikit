@@ -1,0 +1,11 @@
+.button {
+  &.sizeSmall {
+    padding: 0.25rem 0.5rem;
+  }
+  &.sizeMedium {
+    padding: 0.375rem 0.75rem;
+  }
+  &.sizeLarge {
+    padding: 0.5rem 1rem;
+  }
+}
