@@ -13,7 +13,7 @@ const ui = new UIKit({ props: { containerElement: document.getElementById("conta
 const navigation = new BoxContainer({ props: { align: { vertically: "center", horizontally: "center" }, direction: "row", gap: 2 } })
 ui.addChild(navigation)
 
-navigation.setStyle("marginBottom", unit(1))
+navigation.setStyle("marginBottom", unit(2))
 
 const image = new Image({ props: { src: VITE_LOGO, alt: "Vite Logo" } })
 navigation.addChild(image)
@@ -132,10 +132,20 @@ function headingTestFactory() {
 function buttonTestFactory() {
   const buttonContainer = new Card({ props: { size: "medium" } })
   ui.addChild(buttonContainer)
+
+  buttonContainer.setStyle("marginTop", unit(2))
+
   const basicButtonLarge = new BasicButton({ props: { label: "Basic Button", size: "large" } })
   const basicButtonMedium = new BasicButton({ props: { label: "Basic Button", size: "medium" } })
   const basicButtonSmall = new BasicButton({ props: { label: "Basic Button", size: "small" } })
 }
 
+function skeletonTestFactory() {
+  const skeletonContainer = new Card({ props: { size: "medium", loading: true } })
+  ui.addChild(skeletonContainer)
+  skeletonContainer.setStyle("marginTop", unit(2))
+}
+
 headingTestFactory()
 buttonTestFactory()
+skeletonTestFactory()
