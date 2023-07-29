@@ -136,8 +136,11 @@ function buttonTestFactory() {
   buttonContainer.setStyle("marginTop", unit(2))
 
   const basicButtonLarge = new BasicButton({ props: { label: "Basic Button", size: "large" } })
+  buttonContainer.content.addChild(basicButtonLarge)
   const basicButtonMedium = new BasicButton({ props: { label: "Basic Button", size: "medium" } })
+  buttonContainer.content.addChild(basicButtonMedium)
   const basicButtonSmall = new BasicButton({ props: { label: "Basic Button", size: "small" } })
+  buttonContainer.content.addChild(basicButtonSmall)
 }
 
 function skeletonTestFactory() {

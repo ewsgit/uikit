@@ -67,6 +67,7 @@ export default class UIComponent extends UILeafComponent {
   }
 
   removeChild(child: UIComponent) {
+    this.children.find(ind => ind === child)?.renderedElement?.remove()
     this.children.splice(this.children.indexOf(child), 1)
   }
 }

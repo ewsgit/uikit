@@ -1,7 +1,6 @@
 .component {
   display: flex;
   background: var(--container-background);
-  border: 1px solid var(--container-border);
   flex-direction: column;
   padding: 20px 24px;
   border-radius: 3px;
@@ -9,21 +8,32 @@
   box-sizing: border-box;
 }
 
+.border {
+  border: 1px solid var(--container-border);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .skeleton {
   > * {
-    background: currentColor;
     animation: loading 2.5s infinite ease-in-out;
-    opacity: 0.15;
+
+    --color-start: rgba(255, 255, 255, 0.12);
+    --color-end: rgba(255, 255, 255, 0.18);
 
     @keyframes loading {
       0% {
-        opacity: 0.15;
+        background: var(--color-start);
       }
       45% {
-        opacity: 0.75;
+        background: var(--color-end);
       }
       100% {
-        opacity: 0.15;
+        background: var(--color-start);
       }
     }
 
