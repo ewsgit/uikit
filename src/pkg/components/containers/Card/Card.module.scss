@@ -8,6 +8,25 @@
   box-sizing: border-box;
 }
 
+.component.small {
+  padding: 12px 16px;
+}
+
+.component.medium {
+  padding: 20px 24px;
+}
+
+.component.large {
+  padding: 24px 32px;
+}
+
+.component.extraLarge {
+  padding: 28px 40px;
+}
+
+.content {
+}
+
 .border {
   border: 1px solid var(--container-border);
 }
@@ -18,9 +37,42 @@
   justify-content: space-between;
 }
 
+.header.small {
+  padding: 12px 16px;
+
+  > .title {
+    font-size: 16px;
+  }
+}
+
+.header.medium {
+  padding: 20px 24px;
+
+  > .title {
+    font-size: 18px;
+  }
+}
+
+.header.large {
+  padding: 24px 32px;
+
+  > .title {
+    font-size: 18px;
+  }
+}
+
+.header.extraLarge {
+  padding: 28px 40px;
+
+  > .title {
+    font-size: 18px;
+  }
+}
+
 .skeleton {
   > * {
     animation: loading 2.5s infinite ease-in-out;
+    background: var(--color-start);
 
     --color-start: rgba(255, 255, 255, 0.12);
     --color-end: rgba(255, 255, 255, 0.18);
@@ -38,19 +90,23 @@
     }
 
     &:nth-child(1) {
-        animation-delay: 0s;
+      animation-delay: 0s;
     }
+
     &:nth-child(2) {
-        animation-delay: 0.2s;
+      animation-delay: 0.2s;
     }
+
     &:nth-child(3) {
-        animation-delay: 0.4s;
+      animation-delay: 0.4s;
     }
+
     &:nth-child(4) {
-        animation-delay: 0.6s;
+      animation-delay: 0.6s;
     }
+
     &:nth-child(5) {
-        animation-delay: 0.8s;
+      animation-delay: 0.8s;
     }
   }
 }

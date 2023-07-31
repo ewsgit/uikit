@@ -1,7 +1,7 @@
 import './style.css'
 import VITE_LOGO from '/vite.svg'
 import UIKit from "./pkg";
-import { BasicButton, BoxContainer, Image, Paragraph } from "./pkg/components/components.ts";
+import { BasicButton, BoxContainer, FlexContainer, Image, Paragraph } from "./pkg/components/components.ts";
 import Heading from "./pkg/components/text/Heading/Heading.ts";
 import Card from "./pkg/components/containers/Card/Card.ts";
 import unit from "./pkg/helpers/unit.ts";
@@ -133,6 +133,7 @@ function buttonTestFactory() {
   const buttonContainer = new Card({ props: { size: "medium" } })
   ui.addChild(buttonContainer)
 
+  buttonContainer.setTitle("Basic Button")
   buttonContainer.setStyle("marginTop", unit(2))
 
   const basicButtonLarge = new BasicButton({ props: { label: "Basic Button", size: "large" } })
@@ -149,6 +150,37 @@ function skeletonTestFactory() {
   skeletonContainer.setStyle("marginTop", unit(2))
 }
 
+function cardTestFactory() {
+  const cardContainer = new FlexContainer({ props: { gap: 4, align: { vertically: "center", horizontally: "center" }, direction: "column" } })
+  ui.addChild(cardContainer)
+  cardContainer.setStyle("marginTop", unit(2))
+
+  const smallCard = new Card({ props: { size: "small", headerTitle: "Card" } })
+  cardContainer.addChild(smallCard)
+
+  const smallInnerCard = new Card({ props: { size: "small", headerTitle: "Card" } })
+  smallCard.content.addChild(smallInnerCard)
+
+  const mediumCard = new Card({ props: { size: "medium", headerTitle: "Card" } })
+  cardContainer.addChild(mediumCard)
+
+  const mediumInnerCard = new Card({ props: { size: "medium", headerTitle: "Card" } })
+  mediumCard.content.addChild(mediumInnerCard)
+
+  const largeCard = new Card({ props: { size: "large", headerTitle: "Card" } })
+  cardContainer.addChild(largeCard)
+
+  const largeInnerCard = new Card({ props: { size: "large", headerTitle: "Card" } })
+  largeCard.content.addChild(largeInnerCard)
+
+  const extraLargeCard = new Card({ props: { size: "extraLarge", headerTitle: "Card" } })
+  cardContainer.addChild(extraLargeCard)
+
+  const extraLargeInnerCard = new Card({ props: { size: "extraLarge", headerTitle: "Card" } })
+  extraLargeCard.content.addChild(extraLargeInnerCard)
+}
+
 headingTestFactory()
 buttonTestFactory()
 skeletonTestFactory()
+cardTestFactory()

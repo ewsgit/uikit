@@ -13,12 +13,11 @@ export class UILeafComponent {
     console.debug("component_constructed_with_props: ", this)
   }
 
-  render(element: HTMLElement | undefined = this.renderedElement) {
+  render(element?: HTMLElement) {
     console.debug("component_render: ", this)
 
     if (!element) {
       element = document.createElement('div')
-      this.renderedElement = element
     }
 
     if (element !== this.renderedElement) {
