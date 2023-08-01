@@ -5,15 +5,22 @@ import { FlexContainer } from "../containerComponents.ts";
 
 export default class Card extends UILeafComponent {
   props: {
-    cover?: string;
-    size: "small" | "medium" | "large" | "extraLarge";
-    onClick?: () => void;
-    borderless?: boolean;
+    slots?: {
+      headerExtra?: UILeafComponent | undefined;
+      content?: UILeafComponent | undefined;
+      footer?: UILeafComponent | undefined;
+    };
+    title?: string | undefined;
+    size?: "small" | "medium" | "large" | "extraLarge";
     loading?: boolean;
-    headerTitle?: string;
+    borderless?: boolean;
   };
   renderedElement: HTMLDivElement | undefined;
-  renderedHeaderElement: HTMLDivElement | undefined;
+  header: {
+    element: HTMLDivElement | undefined,
+    titleElement: HTMLSpanElement | undefined,
+    extraElement: HTMLDivElement | undefined
+  };
   content: FlexContainer;
 
   constructor({ props, debugId = undefined }: { props: Card["props"]; debugId?: string; }) {
@@ -22,89 +29,65 @@ export default class Card extends UILeafComponent {
     this.props = props;
     this.renderedElement = undefined;
     this.content = new FlexContainer({ props: { direction: "column" } });
+    this.header = { element: undefined, titleElement: undefined, extraElement: undefined }
     return this;
   }
 
   render() {
     if (!this.renderedElement) {
       this.renderedElement = document.createElement("div");
+      this.renderedElement.classList.add(styles.component);
+    }
+
+    if (this.props.borderless) {
+      this.renderedElement.classList.remove(styles.border);
+    } else {
+      this.renderedElement.classList.add(styles.border);
     }
 
     super.render(this.renderedElement);
 
+    this.renderedElement.setAttribute("size", this.props.size || "medium");
+
+    if (this.props?.title || this.props.slots?.headerExtra) {
+      this.createHeaderElement()
+    }
+
     if (this.props.loading) {
-      this.addLoadingSkeleton()
-      this.renderedElement.classList.add(styles.border);
-      this.renderedElement.classList.add(styles.component);
+      this.addLoadingSkeleton();
+      return
+    }
 
-      switch (this.props.size) {
-        case "small":
-          this.content.renderedElement?.classList.add(styles.small);
-          break;
-        case "medium":
-          this.content.renderedElement?.classList.add(styles.medium);
-          break;
-        case "large":
-          this.content.renderedElement?.classList.add(styles.large);
-          break;
-        case "extraLarge":
-          this.content.renderedElement?.classList.add(styles.extraLarge);
-          break;
-        default:
-          console.log("THIS IS A PROBLEM")
-          break;
-      }
-    } else {
-      switch (true) {
-        case !!this.props.headerTitle:
-          this.addHeaderElement(this.props.size);
-          break;
-        default:
-          break;
-      }
-
-      if (this.props.headerTitle) {
-        const headerTitle = document.createElement("span");
-        headerTitle.innerHTML = this.props.headerTitle;
-        headerTitle.classList.add(styles.title)
-        this.renderedHeaderElement?.appendChild(headerTitle);
-      }
-
-      this.content.render();
-
-      // @ts-ignore
-      this.renderedElement?.appendChild(this.content.renderedElement);
-      this.renderedElement.classList.add(styles.border);
-      this.renderedElement.classList.add(styles.component);
-      this.content.renderedElement?.classList.add(styles.content);
-
-      switch (this.props.size) {
-        case "small":
-          this.renderedElement?.classList.add(styles.small);
-          break;
-        case "medium":
-          this.renderedElement?.classList.add(styles.medium);
-          break;
-        case "large":
-          this.renderedElement?.classList.add(styles.large);
-          break;
-        case "extraLarge":
-          this.renderedElement?.classList.add(styles.extraLarge);
-          break;
-        default:
-          console.log("THIS IS A PROBLEM")
-          break;
+    if (this.props.slots?.content) {
+      if (!this.content.renderedElement) {
+        this.content.render()
+        // @ts-ignore
+        this.renderedElement.appendChild(this.content.renderedElement)
+      } else {
+        this.content.render()
       }
     }
   }
 
   setTitle(title: string) {
-    this.props.headerTitle = title;
+    this.props.title = title;
     this.render();
   }
 
   setLoading(loading: boolean) {
     this.setState({ ...this.state, loading });
+  }
+
+  private createHeaderElement() {
+    if (!this.header.element) {
+      this.header.element = document.createElement("div");
+      this.header.element.classList.add(styles.header);
+      this.renderedElement?.appendChild(this.header.element);
+    }
+
+    this.header.titleElement = document.createElement("span");
+    this.header.titleElement.classList.add(styles.title);
+    this.header.element.appendChild(this.header.titleElement);
   }
 
   private addLoadingSkeleton() {
@@ -135,30 +118,6 @@ export default class Card extends UILeafComponent {
     segment3.style.height = skeletonElementHeight;
     segment3.style.borderRadius = unit(0.5);
     skeleton.appendChild(segment3);
-  }
-
-  private addHeaderElement(size: "small" | "medium" | "large" | "extraLarge") {
-    this.renderedHeaderElement = document.createElement("div");
-    this.renderedHeaderElement.classList.add(styles.header);
-
-    switch (size) {
-      case "small":
-        this.renderedHeaderElement.classList.add(styles.small);
-        break;
-      case "medium":
-        this.renderedHeaderElement.classList.add(styles.medium);
-        break;
-      case "large":
-        this.renderedHeaderElement.classList.add(styles.large);
-        break;
-      case "extraLarge":
-        this.renderedHeaderElement.classList.add(styles.extraLarge);
-        break;
-      default:
-        break;
-    }
-
-    this.renderedElement?.appendChild(this.renderedHeaderElement);
   }
 }
 

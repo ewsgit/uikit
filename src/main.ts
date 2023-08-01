@@ -155,28 +155,28 @@ function cardTestFactory() {
   ui.addChild(cardContainer)
   cardContainer.setStyle("marginTop", unit(2))
 
-  const smallCard = new Card({ props: { size: "small", headerTitle: "Card" } })
+  const smallCard = new Card({ props: { size: "small", title: "Card" } })
   cardContainer.addChild(smallCard)
 
-  const smallInnerCard = new Card({ props: { size: "small", headerTitle: "Card" } })
+  const smallInnerCard = new Card({ props: { size: "small", title: "Card" } })
   smallCard.content.addChild(smallInnerCard)
 
-  const mediumCard = new Card({ props: { size: "medium", headerTitle: "Card" } })
+  const mediumCard = new Card({ props: { size: "medium", title: "Card" } })
   cardContainer.addChild(mediumCard)
 
-  const mediumInnerCard = new Card({ props: { size: "medium", headerTitle: "Card" } })
+  const mediumInnerCard = new Card({ props: { size: "medium", title: "Card" } })
   mediumCard.content.addChild(mediumInnerCard)
 
-  const largeCard = new Card({ props: { size: "large", headerTitle: "Card" } })
+  const largeCard = new Card({ props: { size: "large", title: "Card" } })
   cardContainer.addChild(largeCard)
 
-  const largeInnerCard = new Card({ props: { size: "large", headerTitle: "Card" } })
+  const largeInnerCard = new Card({ props: { size: "large", title: "Card" } })
   largeCard.content.addChild(largeInnerCard)
 
-  const extraLargeCard = new Card({ props: { size: "extraLarge", headerTitle: "Card" } })
+  const extraLargeCard = new Card({ props: { size: "extraLarge", title: "Card" } })
   cardContainer.addChild(extraLargeCard)
 
-  const extraLargeInnerCard = new Card({ props: { size: "extraLarge", headerTitle: "Card" } })
+  const extraLargeInnerCard = new Card({ props: { size: "extraLarge", title: "Card" } })
   extraLargeCard.content.addChild(extraLargeInnerCard)
 }
 
