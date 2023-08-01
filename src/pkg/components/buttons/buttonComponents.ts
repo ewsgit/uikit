@@ -1,1 +1,1 @@
-export { default as BasicButton } from "./Button/Button.ts"
+export { default as Button } from "./Button/Button.ts";

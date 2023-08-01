@@ -5,9 +5,9 @@ import { FlexContainer } from "../containerComponents.ts";
 
 export default class Card extends UILeafComponent {
   props: {
-    slots?: {
+    slots: {
       headerExtra?: UILeafComponent | undefined;
-      content?: UILeafComponent | undefined;
+      content: FlexContainer;
       footer?: UILeafComponent | undefined;
     };
     title?: string | undefined;
@@ -17,19 +17,25 @@ export default class Card extends UILeafComponent {
   };
   renderedElement: HTMLDivElement | undefined;
   header: {
-    element: HTMLDivElement | undefined,
-    titleElement: HTMLSpanElement | undefined,
-    extraElement: HTMLDivElement | undefined
+    element: HTMLDivElement | undefined;
+    titleElement: HTMLSpanElement | undefined;
+    extraElement: HTMLDivElement | undefined;
   };
-  content: FlexContainer;
 
-  constructor({ props, debugId = undefined }: { props: Card["props"]; debugId?: string; }) {
-    super({ props, debugId });
+  constructor(props: Omit<Card["props"], "slots">) {
+    super({ props, debugId: "Card" });
 
-    this.props = props;
+    this.props = { ...props, slots: { content: new FlexContainer({}) } };
     this.renderedElement = undefined;
-    this.content = new FlexContainer({ props: { direction: "column" } });
-    this.header = { element: undefined, titleElement: undefined, extraElement: undefined }
+
+    this.props.slots.content = new FlexContainer({
+      direction: "column",
+    });
+    this.header = {
+      element: undefined,
+      titleElement: undefined,
+      extraElement: undefined,
+    };
     return this;
   }
 
@@ -50,21 +56,33 @@ export default class Card extends UILeafComponent {
     this.renderedElement.setAttribute("size", this.props.size || "medium");
 
     if (this.props?.title || this.props.slots?.headerExtra) {
-      this.createHeaderElement()
+      this.createHeaderElement();
     }
 
     if (this.props.loading) {
       this.addLoadingSkeleton();
-      return
+      return;
     }
 
     if (this.props.slots?.content) {
-      if (!this.content.renderedElement) {
-        this.content.render()
+      if (!this.props.slots.content.renderedElement) {
+        this.props.slots.content.render();
         // @ts-ignore
-        this.renderedElement.appendChild(this.content.renderedElement)
+        this.props.slots.content.renderedElement?.classList.add(styles.content);
+        this.renderedElement.appendChild(
+          // @ts-ignore
+          this.props.slots.content.renderedElement,
+        );
+
+        if (this.props?.title || this.props.slots?.headerExtra) {
+          // @ts-ignore
+          this.props.slots.content.renderedElement?.setAttribute(
+            "header",
+            "true",
+          );
+        }
       } else {
-        this.content.render()
+        this.props.slots.content.render();
       }
     }
   }
@@ -75,7 +93,8 @@ export default class Card extends UILeafComponent {
   }
 
   setLoading(loading: boolean) {
-    this.setState({ ...this.state, loading });
+    this.props.loading = loading;
+    this.render();
   }
 
   private createHeaderElement() {
@@ -85,9 +104,13 @@ export default class Card extends UILeafComponent {
       this.renderedElement?.appendChild(this.header.element);
     }
 
-    this.header.titleElement = document.createElement("span");
-    this.header.titleElement.classList.add(styles.title);
-    this.header.element.appendChild(this.header.titleElement);
+    if (!this.header.titleElement) {
+      this.header.titleElement = document.createElement("span");
+      this.header.titleElement.classList.add(styles.title);
+      this.header.element.appendChild(this.header.titleElement);
+    }
+
+    this.header.titleElement.textContent = this.props.title || "";
   }
 
   private addLoadingSkeleton() {
@@ -108,13 +131,13 @@ export default class Card extends UILeafComponent {
     skeleton.appendChild(segment);
 
     const segment2 = document.createElement("div");
-    segment2.style.width = `${Math.max(10, Math.floor(Math.random() * 100),)}%`;
+    segment2.style.width = `${Math.max(10, Math.floor(Math.random() * 100))}%`;
     segment2.style.height = skeletonElementHeight;
     segment2.style.borderRadius = unit(0.5);
     skeleton.appendChild(segment2);
 
     const segment3 = document.createElement("div");
-    segment3.style.width = `${Math.max(10, Math.floor(Math.random() * 100),)}%`;
+    segment3.style.width = `${Math.max(10, Math.floor(Math.random() * 100))}%`;
     segment3.style.height = skeletonElementHeight;
     segment3.style.borderRadius = unit(0.5);
     skeleton.appendChild(segment3);
